@@ -4,11 +4,11 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Employee implements Comparable {
+public class Employee implements Comparable<Employee> {
 	private String name;
-	private int designation;
+	private String designation;
 	private int salary;
-	public Employee(String name,int designation,int salary) {
+	public Employee(String name,String designation,int salary) {
 		this.name=name;
 		this.designation=designation;
 		this.salary=salary;
@@ -23,50 +23,66 @@ public class Employee implements Comparable {
 				return -1;
 			}
 			else {
-				if(e1.designation>e2.designation) {
+				if(e1.designation.compareTo(e2.designation)>0) {
 					return 1;
 				}
-				else if(e1.designation<e2.designation) {
+				else if(e1.designation.compareTo(e2.designation)<0) {
 					return -1;
 				}
+				
 				
 			}
 			return 0;
 		}
-	};
+	}
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Employee e) {
 		// TODO Auto-generated method stub
-		if(o!=null && o instanceof Employee) {
-			Employee e=(Employee)o;
-			if(salary>e.salary) {
+		if(salary>e.salary) {
+			return 1;
+		}
+		else if(e.salary>salary) {
+			return -1;
+		}
+		else {
+			if(this.name.compareTo(e.name)>0) {
 				return 1;
 			}
-			else if(e.salary>salary) {
+			else if(this.name.compareTo(e.name)<0) {
 				return -1;
 			}
-			
+			else {
+				if(this.designation.compareTo(e.designation)>0) {
+					return 1;
+				}
+				else if(this.designation.compareTo(e.designation)<0) {
+					return -1;
+				}
+				
+				
+			}
 		}
 		return 0;
 	}
 	@Override
 	public String toString() {
-		String str="Name:"+name+", Designation:"+designation+", Salary:"+salary;
+		String str="\nName:"+name+", Designation:"+designation+", Salary:"+salary;
 		return str;
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Set<Employee> s=new TreeSet<Employee>();
-		s.add(new Employee("Andrew",1,123));
-		s.add(new Employee("Bill",3,1000));
-		s.add(new Employee("Bill",2,1001));
-		s.add(new Employee("Charles",1,500));
+		s.add(new Employee("Andrew","Accounts",123));
+		s.add(new Employee("Bill","HR",1000));
+		s.add(new Employee("Bill","Accounts",1001));
+		s.add(new Employee("Charles","IT",500));
+		s.add(new Employee("David","HR",500));
 		System.out.println(s);
 		Set<Employee> s2=new TreeSet<Employee>(new empComp());
-		s.add(new Employee("Andrew",1,123));
-		s.add(new Employee("Bill",3,1000));
-		s.add(new Employee("Bill",2,1001));
-		s.add(new Employee("Charles",1,500));
+		s2.add(new Employee("Andrew","Accounts",123));
+		s2.add(new Employee("Bill","HR",1000));
+		s2.add(new Employee("Bill","Accounts",1001));
+		s2.add(new Employee("Charles","IT",500));
+		s2.add(new Employee("David","HR",500));
 		System.out.println(s2);
 	}
 	
